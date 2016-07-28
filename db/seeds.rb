@@ -22,6 +22,14 @@ posts = Post.all
     )
 end
 
+unique_post = Post.find_or_create_by(
+    title: "newtitle",
+    body: "This is the body")
+    
+Comment.find_or_create_by(
+    post: unique_post,
+    body: "New comment")
+
 puts "Seed finished"
 puts "#{Post.count} posts created"
 puts "#{Comment.count} comments created"
