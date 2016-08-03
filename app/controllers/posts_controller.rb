@@ -21,7 +21,7 @@ class PostsController < ApplicationController
       redirect_to @post
       
     else
-      flash.now[:alert] = "There was and errir saving the post. Please try again."
+      flash.now[:alert] = "There was and error saving the post. Please try again."
       render :new
     end
   end
