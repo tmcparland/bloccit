@@ -2,7 +2,11 @@
 @import "bootstrap";
 
  .user-info {
+   border: solid, blue, 5px;
    margin-top: 9px;
+   margin-right: 9px;
+   margin-left: 9px;
+   desplay: inline-block;
  }
  
  .nav {
