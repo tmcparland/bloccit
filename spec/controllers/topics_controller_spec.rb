@@ -4,6 +4,7 @@ RSpec.describe TopicsController, type: :controller do
   let(:my_topic) { Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph) }
 
   describe "GET index" do
+    
     it "returns http success" do
       get :index
       expect(response).to have_http_status(:success)
@@ -16,6 +17,7 @@ RSpec.describe TopicsController, type: :controller do
   end
   
   describe "GET show" do
+    
     it "returns http success" do
       get :show, {id: my_topic.id}
       expect(response).to have_http_status(:success)
@@ -30,9 +32,11 @@ RSpec.describe TopicsController, type: :controller do
       get :show, {id: my_topic.id}
       expect(assigns(:topic)).to eq(my_topic)
     end
+    
   end
   
   describe "GET new" do
+    
     it "returns http success" do
       get :new
       expect(response).to have_http_status(:success)
@@ -47,9 +51,11 @@ RSpec.describe TopicsController, type: :controller do
       get :new
       expect(assigns(:topic)).not_to be_nil
     end
+    
   end
   
  describe "POST create" do
+   
     it "increases the number of topics by 1" do
       expect{ post :create, {topic: {name: RandomData.random_sentence, description: RandomData.random_paragraph}}}.to change(Topic,:count).by(1)
     end
@@ -63,9 +69,11 @@ RSpec.describe TopicsController, type: :controller do
       post :create, {topic: {name: RandomData.random_sentence, description: RandomData.random_paragraph}}
       expect(response).to redirect_to Topic.last
     end
+    
   end
   
  describe "GET edit" do
+   
     it "returns http success" do
       get :edit, {id: my_topic.id}
       expect(response).to have_http_status(:success)
@@ -84,9 +92,11 @@ RSpec.describe TopicsController, type: :controller do
       expect(topic_instance.name).to eq my_topic.name
       expect(topic_instance.description).to eq my_topic.description
     end
+    
   end
   
   describe "PUT update" do
+    
     it "updates topic with expected attributes" do
       new_name = RandomData.random_sentence
       new_description = RandomData.random_paragraph
@@ -106,9 +116,11 @@ RSpec.describe TopicsController, type: :controller do
       put :update, id: my_topic.id, topic: { name: new_name, description: new_description }
       expect(response).to redirect_to my_topic
     end
+    
   end
   
   describe "DELETE destroy" do
+    
     it "deletes the topic" do
       delete :destroy, {id: my_topic.id}
       count = Topic.where({id: my_topic.id}).size
@@ -119,5 +131,6 @@ RSpec.describe TopicsController, type: :controller do
       delete :destroy, {id: my_topic.id}
       expect(response).to redirect_to topics_path
     end
+    
   end
 end
