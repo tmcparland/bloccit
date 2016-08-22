@@ -17,6 +17,7 @@ RSpec.describe User, type: :model do
    it { is_expected.to validate_length_of(:password).is_at_least(6) }
  
    describe "attributes" do
+       
      it "should have name and email attributes" do
        expect(user).to have_attributes(name: "Bloccit User", email: "user@bloccit.com")
      end
@@ -28,7 +29,11 @@ RSpec.describe User, type: :model do
      it "responds to admin?" do
        expect(user).to respond_to(:admin?)
      end
- 
+     
+     it "responds to mod?" do
+       expect(user).to respond_to(:mod?)
+     end
+    
      it "responds to member?" do
        expect(user).to respond_to(:member?)
      end
@@ -44,9 +49,31 @@ RSpec.describe User, type: :model do
        it "returns true for #member?" do
          expect(user.member?).to be_truthy
        end
+       
+       it "returns false for #mod?" do
+         expect(user.mod?).to be_falsey
+       end
  
        it "returns false for #admin?" do
          expect(user.admin?).to be_falsey
+       end
+     end
+     
+     context "mod user" do
+       before do
+         user.mod!
+       end
+ 
+       it "returns false for #member?" do
+         expect(user.member?).to be_falsey
+       end
+       
+       it "returns true for #mod?" do
+         expect(user.mod?).to be_truthy
+       end
+ 
+       it "returns false for #admin?" do
+         expect(user.mod?).to be_falsey
        end
      end
  
@@ -57,6 +84,10 @@ RSpec.describe User, type: :model do
  
        it "returns false for #member?" do
          expect(user.member?).to be_falsey
+       end
+       
+       it "returns false for #mod?" do
+         expect(user.mod?).to be_falsey
        end
  
        it "returns true for #admin?" do

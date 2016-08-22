@@ -3,10 +3,9 @@ require 'random_data'
 # Create Users
 5.times do
   User.create!(
-
-  name:     RandomData.random_name,
-  email:    RandomData.random_email,
-  password: RandomData.random_sentence
+    name:     RandomData.random_name,
+    email:    RandomData.random_email,
+    password: RandomData.random_sentence
   )
 end
 users = User.all
@@ -29,31 +28,38 @@ topics = Topic.all
         body: RandomData.random_paragraph
     )
 end
-
 posts = Post.all
 
 #create comments
 100.times do
     Comment.create!(
-        ##4
         post: posts.sample,
         body: RandomData.random_paragraph
     )
 end
 
- admin = User.create!(
+#create admin
+admin = User.create!(
    name:     'Admin User',
    email:    'admin@example.com',
    password: 'helloworld',
    role:     'admin'
- )
- 
+)
 
- member = User.create!(
+#create moderator
+mod = User.create!(
+    name:     'Mod User',
+    email:    'mod@example.com',
+    password: 'helloworld',
+    role:     'mod'
+)
+ 
+#create member
+member = User.create!(
    name:     'Member User',
    email:    'member@example.com',
    password: 'helloworld'
- )
+)
 
 puts "Seed finished"
 puts "#{User.count} users created"
