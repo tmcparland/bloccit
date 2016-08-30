@@ -2,9 +2,14 @@ class CommentsController < ApplicationController
     
    before_action :require_sign_in
    before_action :authorize_user, only: [:destroy]
- 
+
+
   def create
-    @post = Post.find(params[:post_id])
+    if params[:topic].present?
+      @topic = Topic.find(params[:topic_id])
+    else
+      @post = Post.find(params[:post_id])
+    end
     comment = @post.comments.new(comment_params)
     comment.user = current_user
  
@@ -18,7 +23,11 @@ class CommentsController < ApplicationController
   end
   
   def destroy
-    @post = Post.find(params[:post_id])
+    if params[:topic].present?
+      @topic = Topic.find(params[:topic_id])
+    else
+      @post = Post.find(params[:post_id])
+    end
     comment = @post.comments.find(params[:id])
  
     if comment.destroy
@@ -37,6 +46,11 @@ class CommentsController < ApplicationController
   end
   
   def authorize_user
+    if params[:topic].present?
+      @topic = Topic.find(params[:topic_id])
+    else
+      @post = Post.find(params[:post_id])
+    end
     comment = Comment.find(params[:id])
     unless current_user == comment.user || current_user.admin?
       flash[:alert] = "You do not have permission to delete a comment."
