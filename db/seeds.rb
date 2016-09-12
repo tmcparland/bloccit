@@ -45,8 +45,8 @@ posts = Post.all
 end
 
  admin = User.create!(
-   name:     'Admin User',
-   email:    'admin@example.com',
+   name:     'Tara McParland',
+   email:    'tara.mcparland@gmail.com',
    password: 'helloworld',
    role:     'admin'
  )
