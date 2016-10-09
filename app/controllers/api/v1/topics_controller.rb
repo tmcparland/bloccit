@@ -4,12 +4,12 @@
  
    def index
        topics = Topic.all
-       render json: topics, status: 200
+       render json: topics.to_json(include: :posts), status: 200
    end
  
    def show
        topic = Topic.find(params[:id])
-       render json: topic, status: 200
+       render json: topic.to_json(include: :posts), status: 200
    end
    
    def update
@@ -32,6 +32,17 @@
        render json: {error: "Topic is invalid", status: 400}, status: 400
      end
    end
+   
+   def create_post
+     topic = Topic.find(params[:topic_id])
+     post = topic.posts.new(post_params)
+    
+    if post.valid?
+      render json: post.to_json, status: 201
+    else
+      render json: {error: 'Post is invalid', status: 400}, status: 400
+    end       
+   end
  
    def destroy
      topic = Topic.find(params[:id])
@@ -44,7 +55,12 @@
    end
    
    private
+   
    def topic_params
      params.require(:topic).permit(:name, :description, :public)
+   end
+   
+   def post_params
+     params.require(:post).permit(:title, :body)
    end
  end
